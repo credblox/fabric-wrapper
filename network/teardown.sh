@@ -1,9 +1,9 @@
 #!/bin/bash
 #
 # Exit on first error, print all commands.
-set -ev
 
 # Shut down the Docker containers for the system tests.
+cd "$(dirname "$0")"
 docker-compose -f docker-compose.yml kill && docker-compose -f docker-compose.yml down
 if [ "$(docker ps -aq)" ]; then
 	docker rm -f $(docker ps -aq)
@@ -15,3 +15,4 @@ if [ "$(docker images dev-* -q)" ]; then
 fi
 
 # Your system is now clean
+echo -e "\nNetwork teardown completed!!\n"
